@@ -1,0 +1,39 @@
+<!-- Header -->
+<header class="bg-white shadow-md fixed top-0 left-64 right-0 h-16 flex items-center px-6 z-10">
+    <div class="flex justify-between items-center w-full">
+
+        <!-- Left: Title -->
+        <h1 class="text-2xl font-bold text-gray-900">
+            <%= title %>
+        </h1>
+
+        <!-- Right: Buttons and profile -->
+        <div class="flex items-center space-x-4">
+
+
+            <!-- Profile Dropdown (simplified) -->
+            <div class="relative group">
+                <button
+                    class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md">
+                    <img src="/images/profile.png" alt="User Avatar" class="w-8 h-8 rounded-full" />
+                    <span class="hidden sm:inline text-gray-700 font-semibold">John Doe</span>
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div
+                    class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity">
+                    <a href="/profile" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                    <a href="/settings" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                    <form method="POST" action="/logout">
+                        <button type="submit" class="w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</header>
