@@ -1,0 +1,42 @@
+<!-- Main content -->
+<main class="flex-grow p-10">
+  <h1 class="text-3xl font-bold mb-6 text-gray-900">Welcome back, <%= authUser ? authUser.name : 'Guest' %></h1>
+
+  <section class="grid grid-cols-3 gap-6">
+    <!-- Card 1 -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold mb-2">Total Users</h2>
+      <p class="text-4xl font-bold text-blue-600"><%= totalUsers %></p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold mb-2">New Registrations</h2>
+      <p class="text-4xl font-bold text-green-600"><%= newRegistrations %></p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold mb-2">Active Sessions</h2>
+      <p class="text-4xl font-bold text-purple-600"><%= activeSessions %></p>
+    </div>
+  </section>
+
+  <section class="mt-10 bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+    <ul class="divide-y divide-gray-200">
+      <li class="py-3 flex justify-between">
+        <span>User Alice registered</span>
+        <time class="text-gray-500 text-sm">2 hours ago</time>
+      </li>
+      <li class="py-3 flex justify-between">
+        <span>User Bob updated profile</span>
+        <time class="text-gray-500 text-sm">5 hours ago</time>
+      </li>
+      <li class="py-3 flex justify-between">
+        <span>New comment added</span>
+        <time class="text-gray-500 text-sm">1 day ago</time>
+      </li>
+    </ul>
+  </section>
+</main>

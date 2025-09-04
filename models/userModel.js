@@ -1,31 +1,23 @@
-let users = [
-    { id: 1, name: "Alice", email: "alice@example.com" },
-    { id: 2, name: "Bob", email: "bob@example.com" }
-];
+// models/userModel.js
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const getAllUsers = () => users;
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+}, { timestamps: true });
 
-const getUserById = id => users.find(u => u.id === id);
 
-const addUser = (name, email) => {
-    const id = users.length ? users[users.length - 1].id + 1 : 1;
-    users.push({ id, name, email });
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+
+userSchema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
 };
 
-const updateUser = (id, name, email) => {
-    users = users.map(user =>
-        user.id === id ? { id, name, email } : user
-    );
-};
-
-const deleteUser = id => {
-    users = users.filter(user => user.id !== id);
-};
-
-module.exports = {
-    getAllUsers,
-    getUserById,
-    addUser,
-    updateUser,
-    deleteUser
-};
+module.exports = mongoose.model('User', userSchema);
