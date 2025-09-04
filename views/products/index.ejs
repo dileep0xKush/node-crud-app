@@ -1,0 +1,77 @@
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-2xl font-bold">Product List</h1>
+  <a href="/products/create" class="bg-blue-600 text-white px-4 py-2 rounded">
+    Add Product
+  </a>
+</div>
+
+<form method="GET" class="mb-4 flex justify-end gap-2">
+  <input
+    type="text"
+    name="search"
+    value="<%= search %>"
+    class="border px-3 py-1 rounded w-64"
+    placeholder="Search..."
+  />
+  <button class="bg-gray-200 px-4 py-1 rounded hover:bg-gray-300">
+    Search
+  </button>
+</form>
+
+<table class="w-full table-auto border-collapse">
+  <thead>
+    <tr class="bg-gray-100">
+      <th class="border px-4 py-2 text-left">Name</th>
+      <th class="border px-4 py-2 text-left">Price</th>
+      <th class="border px-4 py-2 text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (products.length === 0) { %>
+    <tr>
+      <td colspan="3" class="text-center py-4 text-gray-500">
+        No products found
+      </td>
+    </tr>
+    <% } else { %> <% products.forEach(p => { %>
+    <tr>
+      <td class="border px-4 py-2"><%= p.name %></td>
+      <td class="border px-4 py-2">₹<%= p.price %></td>
+      <td class="border px-4 py-2 text-center">
+        <a
+          href="/products/edit/<%= p._id %>"
+          class="text-yellow-600 hover:underline mr-2"
+          >Edit</a
+        >
+        <form
+          method="POST"
+          action="/products/delete/<%= p._id %>"
+          class="inline"
+        >
+          <button type="submit" class="text-red-600 hover:underline">
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %> <% } %>
+  </tbody>
+</table>
+
+<% if (totalPages > 1) { %>
+<div class="mt-6 flex justify-end space-x-1">
+  <% const pagesToShow = []; for (let i = 1; i <= totalPages; i++) { if ( i <= 2
+  || i > totalPages - 2 || (i >= currentPage - 1 && i <= currentPage + 1) ) {
+  pagesToShow.push(i); } } let lastShown = 0; pagesToShow.forEach(i => { if (i -
+  lastShown > 1) { %>
+  <span class="px-2 py-1 text-gray-400">...</span>
+  <% } lastShown = i; %>
+  <a
+    href="/products?page=<%= i %>&search=<%= search %>"
+    class="px-3 py-1 border rounded-md <%= i === currentPage ? 'bg-blue-600 text-white' : 'bg-white text-gray-800 hover:bg-gray-200' %>"
+  >
+    <%= i %>
+  </a>
+  <% }) %>
+</div>
+<% } %>

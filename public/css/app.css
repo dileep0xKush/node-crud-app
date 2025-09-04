@@ -1,0 +1,41 @@
+/* Container card */
+.error-card {
+  background: #fff; /* white card */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  padding: 24px;
+  max-width: 500px;
+  margin: 40px auto;
+  font-family: "Inter", sans-serif;
+  color: #1f2937; /* neutral gray-800 */
+}
+
+/* Small 404 label */
+.error-code {
+  font-size: 0.9rem;
+  color: #ef4444; /* Tailwind red-500 */
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Main message */
+.error-message {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+
+/* Button */
+.error-card a {
+  display: inline-block;
+  background-color: #2563eb; /* Tailwind blue-600 */
+  color: white;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.error-card a:hover {
+  background-color: #1e40af; /* Tailwind blue-800 */
+}

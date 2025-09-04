@@ -1,23 +1,61 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const { isAuthenticated } = require('./middleware/auth');
 const expressLayouts = require('express-ejs-layouts');
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const productRoutes = require('./routes/productRoutes');
+
+const session = require('express-session');
+const attachUser = require('./utils/authUser');
+const connectDB = require('./config/db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
-app.set('view engine', 'ejs');
 
-// Use express-ejs-layouts middleware
 app.use(expressLayouts);
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your_secret_key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 30 * 60 * 1000
+    }
+}));
+
+app.use(attachUser);
+
+app.set('view engine', 'ejs');
 app.set('layout', 'layout');
 
-// Routes
-app.use('/', userRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.use('/', authRoutes);
+app.use('/dashboard', isAuthenticated, dashboardRoutes);
+app.use('/users', isAuthenticated, userRoutes);
+app.use('/products', isAuthenticated, productRoutes);
+
+app.use((req, res) => {
+    res.status(404).render('error/404', {
+        title: 'Page Not Found',
+        layout: false
+    });
 });
+
+// Connect to MongoDB and start server
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server is running at http://localhost:${PORT}`);
+        });
+    } catch (err) {
+        console.error('Failed to start server:', err);
+    }
+};
+
+startServer();

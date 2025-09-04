@@ -44,7 +44,6 @@ bower_components/
 .env.*.local
 
 # IDE or editor folders and files
-.vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
@@ -64,3 +63,7 @@ build/
 
 # Misc
 *.tgz
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
